@@ -1,6 +1,8 @@
 import PropTypes from "prop-types";
+import usePopup from "./PopUp/UsePopup";
 
 const ChecklistCard = ({ title, categories, description }) => {
+  const { openPopup } = usePopup();
   return (
     <div className="border rounded-lg p-4 bg-white shadow-sm">
       <h3 className="text-lg font-medium mb-2">{title}</h3>
@@ -18,7 +20,7 @@ const ChecklistCard = ({ title, categories, description }) => {
           <button className="text-yellow-500">
             <span className="h-5 w-5 inline-block">⭐</span>
           </button>
-          <button className="text-red-500">
+          <button onClick={openPopup} className="text-red-500">
             <span className="h-5 w-5 inline-block">🗑️</span>
           </button>
         </div>

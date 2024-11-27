@@ -1,6 +1,8 @@
 import "./App.css";
 import ChecklistCard from "./components/ChecklistCard";
 import Nav from "./components/Nav";
+import PopUp from "./components/PopUp/PopUp";
+import { PopupProvider } from "./components/PopUp/PopUpProvider";
 import SearchBar from "./components/SearchBar";
 import Sidebar from "./components/Sidebar";
 // import Form from "./screen/Form";
@@ -32,19 +34,21 @@ const notes = [
 function App() {
   return (
     <>
-      <div className="min-h-screen p-4 pb-24 xl:ml-64">
-        <Sidebar />
-        <div>
-          <SearchBar />
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {notes.map((note, index) => (
-              <ChecklistCard key={index} {...note} />
-            ))}
+      <PopupProvider>
+        <div className="min-h-screen p-4 pb-24 xl:ml-64">
+          <Sidebar />
+          <div>
+            <SearchBar />
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {notes.map((note, index) => (
+                <ChecklistCard key={index} {...note} />
+              ))}
+            </div>
+            <PopUp />
+            <Nav />
           </div>
-
-          <Nav />
         </div>
-      </div>
+      </PopupProvider>
       {/* <Checklist/> */}
       {/* <Form/> */}
     </>
