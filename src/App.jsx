@@ -1,3 +1,4 @@
+import { useState } from "react";
 import "./App.css";
 import ChecklistCard from "./components/ChecklistCard";
 import Nav from "./components/Nav";
@@ -15,32 +16,40 @@ const notes = [
     description: "Check if all action for SEO are done",
   },
   {
-    title: "Note 1",
+    title: "Note 2",
     categories: ["category", "category"],
     description: "Check if all action for SEO are done",
   },
   {
-    title: "Note 1",
+    title: "Note 3",
     categories: ["category", "category"],
     description: "Check if all action for SEO are done",
   },
   {
-    title: "Note 1",
+    title: "Note 4",
     categories: ["category", "category"],
     description: "Check if all action for SEO are done",
   },
 ];
 
 function App() {
+  const [filteredItems, setFilteredItems] = useState(notes);
+
+  const handleSearch = (searchTerm) => {
+    const filtered = notes.filter(item => 
+      item.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredItems(filtered);
+  };
   return (
     <>
       <PopupProvider>
         <div className="min-h-screen p-4 pb-24 xl:ml-64">
           <Sidebar />
           <div>
-            <SearchBar />
+            <SearchBar onSearch={handleSearch}/>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {notes.map((note, index) => (
+              {filteredItems.map((note, index) => (
                 <ChecklistCard key={index} {...note} />
               ))}
             </div>
