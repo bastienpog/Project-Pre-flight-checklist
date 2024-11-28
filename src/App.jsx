@@ -6,8 +6,8 @@ import PopUp from "./components/PopUp/PopUp";
 import { PopupProvider } from "./components/PopUp/PopUpProvider";
 import SearchBar from "./components/SearchBar";
 import Sidebar from "./components/Sidebar";
-// import Form from "./screen/Form";
-// import Checklist from "./screen/Checklist"
+import Form from "./screen/Form";
+import Checklist from "./screen/Checklist"
 
 const notes = [
   {
@@ -43,7 +43,7 @@ function App() {
   };
   return (
     <>
-      <PopupProvider>
+      {/* <PopupProvider>
         <div className="min-h-screen p-4 pb-24 xl:ml-64">
           <Sidebar />
           <div>
@@ -57,9 +57,9 @@ function App() {
             <Nav />
           </div>
         </div>
-      </PopupProvider>
+      </PopupProvider> */}
       {/* <Checklist/> */}
-      {/* <Form/> */}
+      <Form/>
     </>
   );
 }

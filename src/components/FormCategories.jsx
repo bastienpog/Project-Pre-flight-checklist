@@ -15,13 +15,13 @@ const FormCategories = ({ categories, onAddCategory, onRemoveCategory }) => {
   };
 
   return (
-    <div className="p-4 bg-white">
-      <h2 className="mb-3">Categories :</h2>
+    <div className="p-4 bg-white xl:bg-customBlue">
+      <h2 className="mb-3 font-semibold xl:text-white">Categories :</h2>
       <div className="flex flex-wrap gap-2 mb-4">
         {categories.map((category, index) => (
           <span
             key={index}
-            className="px-4 py-2 bg-customBlue text-white rounded-full text-sm flex items-center gap-2"
+            className="px-4 py-2 bg-customBlue text-white rounded-full text-sm flex items-center gap-2 xl:bg-white xl:text-customBlue"
           >
             {category}
             <button
@@ -36,7 +36,7 @@ const FormCategories = ({ categories, onAddCategory, onRemoveCategory }) => {
 
       {showInput ? (
         <form onSubmit={handleSubmit} className="mb-4">
-          <div className="flex gap-2">
+          <div className="flex xl:flex-col gap-2">
             <input
               type="text"
               value={newCategory}
@@ -47,7 +47,7 @@ const FormCategories = ({ categories, onAddCategory, onRemoveCategory }) => {
             />
             <button
               type="submit"
-              className="bg-customBlue text-white px-4 rounded hover:bg-blue-800"
+              className="bg-customBlue text-white px-4 rounded xl:bg-white xl:text-customBlue"
             >
               Add
             </button>
@@ -57,7 +57,7 @@ const FormCategories = ({ categories, onAddCategory, onRemoveCategory }) => {
                 setShowInput(false);
                 setNewCategory('');
               }}
-              className="border border-gray-300 px-4 rounded hover:bg-gray-50"
+              className="border px-4 rounded xl:bg-white xl:text-customBlue"
             >
               Cancel
             </button>
@@ -66,7 +66,7 @@ const FormCategories = ({ categories, onAddCategory, onRemoveCategory }) => {
       ) : (
         <button
           onClick={() => setShowInput(true)}
-          className="w-full bg-customBlue text-white py-2 rounded flex items-center justify-center gap-2 hover:bg-blue-800"
+          className="w-full bg-customBlue text-white py-2 rounded flex items-center justify-center gap-2 xl:bg-white xl:text-customBlue"
         >
           <Plus size={20} />
           New category

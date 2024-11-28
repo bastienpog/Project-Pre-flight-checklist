@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 
 const FormTask = ({ task, onTaskChange, onRemoveTask, isNew = false }) => (
   <div className="flex items-start gap-3 mb-3">
-    <input type="checkbox" className="mt-2 h-8 w-8 accent-customBlue" />
+    <input type="checkbox" className="mt-2 h-7 w-7 accent-customBlue" />
     <input
       type="text"
       value={task}
