@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import "./App.css";
 import ChecklistCard from "./components/ChecklistCard";
 import Nav from "./components/Nav";
@@ -6,8 +7,6 @@ import PopUp from "./components/PopUp/PopUp";
 import { PopupProvider } from "./components/PopUp/PopUpProvider";
 import SearchBar from "./components/SearchBar";
 import Sidebar from "./components/Sidebar";
-import Form from "./screen/Form";
-import Checklist from "./screen/Checklist"
 
 const notes = [
   {
@@ -36,30 +35,28 @@ function App() {
   const [filteredItems, setFilteredItems] = useState(notes);
 
   const handleSearch = (searchTerm) => {
-    const filtered = notes.filter(item => 
-      item.title.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    const filtered = notes.filter((item) => item.title.toLowerCase().includes(searchTerm.toLowerCase()));
     setFilteredItems(filtered);
   };
   return (
     <>
-      {/* <PopupProvider>
+      <PopupProvider>
         <div className="min-h-screen p-4 pb-24 xl:ml-64">
           <Sidebar />
           <div>
-            <SearchBar onSearch={handleSearch}/>
+            <SearchBar onSearch={handleSearch} />
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {filteredItems.map((note, index) => (
-                <ChecklistCard key={index} {...note} />
+                <Link to={"/Checklist"}>
+                  <ChecklistCard key={index} {...note} />
+                </Link>
               ))}
             </div>
             <PopUp />
             <Nav />
           </div>
         </div>
-      </PopupProvider> */}
-      {/* <Checklist/> */}
-      <Form/>
+      </PopupProvider>
     </>
   );
 }
