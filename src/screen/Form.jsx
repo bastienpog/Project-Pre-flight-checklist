@@ -1,8 +1,9 @@
 import { useState } from "react";
-import FormBottomNav from "../components/FormBottomNav";
-import FormCategories from "../components/FormCategories";
-import FormInfo from "../components/FormInfo";
-import FormTaskList from "../components/FormTaskList";
+import BottomNav from "../components/BottomNav";
+import Categories from "../components/Categories";
+import Info from "../components/Info";
+import TaskList from "../components/TaskList";
+import { PopupProvider } from "../components/PopUp/PopUpProvider";
 
 const Form = () => {
   const [formData, setFormData] = useState({
@@ -55,31 +56,28 @@ const Form = () => {
   };
 
   const handleSave = () => {
-    console.log("Saving form data:", formData);
-    // Add your save logic here
-  };
 
-  const handleBack = () => {
-    console.log("Navigating back");
-    // Add your navigation logic here
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-20 xl:ml-64">
-      <div className="xl:bg-customBlue xl:fixed xl:left-0 xl:top-0 xl:w-64 xl:h-full">
-        <FormInfo
-          title={formData.title}
-          description={formData.description}
-          onTitleChange={handleTitleChange}
-          onDescriptionChange={handleDescriptionChange}
-        />
+    <PopupProvider>
+      <div className="min-h-screen bg-gray-50 pb-20 xl:ml-64">
+        <div className="xl:bg-customBlue xl:fixed xl:left-0 xl:top-0 xl:w-64 xl:h-full">
+          <Info
+            editable={true}
+            title={formData.title}
+            description={formData.description}
+            onTitleChange={handleTitleChange}
+            onDescriptionChange={handleDescriptionChange}
+          />
 
-        <FormCategories categories={formData.categories} onAddCategory={handleAddCategory} onRemoveCategory={handleRemoveCategory} />
+          <Categories editable={true} categories={formData.categories} onAddCategory={handleAddCategory} onRemoveCategory={handleRemoveCategory} />
+        </div>
+        <TaskList editable={true} tasks={formData.tasks} onUpdateTask={handleUpdateTask} onRemoveTask={handleRemoveTask} onAddTask={handleAddTask} />
+
+        <BottomNav onSave={handleSave} form={true} />
       </div>
-      <FormTaskList tasks={formData.tasks} onUpdateTask={handleUpdateTask} onRemoveTask={handleRemoveTask} onAddTask={handleAddTask} />
-
-      <FormBottomNav onBack={handleBack} onSave={handleSave} />
-    </div>
+    </PopupProvider>
   );
 };
 

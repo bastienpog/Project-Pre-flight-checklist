@@ -23,11 +23,6 @@ const Checklist = () => {
     ],
   };
 
-  const handleBack = () => {
-    // Handle navigation back
-    console.log("Navigate back");
-  };
-
   return (
     <PopupProvider>
       <div className="min-h-screen pb-20 xl:ml-64">
@@ -46,7 +41,7 @@ const Checklist = () => {
 
         <TaskList tasks={noteData.tasks} />
 
-        <BottomNav onBack={handleBack} />
+        <BottomNav/>
       </div>
     </PopupProvider>
   );

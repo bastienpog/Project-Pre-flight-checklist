@@ -1,5 +1,8 @@
+import { SquarePen, Trash2 } from "lucide-react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 import usePopup from "./PopUp/UsePopup";
+
 
 const ChecklistCard = ({ title, categories, description }) => {
   const { openPopup } = usePopup();
@@ -17,11 +20,14 @@ const ChecklistCard = ({ title, categories, description }) => {
       <div className="flex justify-between items-center">
         <span className="text-sm text-gray-500">View task (4)</span>
         <div className="flex gap-2">
-          <button className="text-customYellow">
-            <span className="h-5 w-5 inline-block">⭐</span>
-          </button>
+          <Link to={"/form"}>
+            <button className="text-customYellow mt-2">
+              <SquarePen size={32} className="hover:text-customYellow" />
+            </button>
+          </Link>
+
           <button onClick={openPopup} className="text-customRed">
-            <span className="h-5 w-5 inline-block">🗑️</span>
+            <Trash2 size={32} className="hover:text-customRed" />
           </button>
         </div>
       </div>
