@@ -1,36 +1,30 @@
-const Sidebar = () => {
+const Sidebar = ({ categories, selectedCategories, onCategoryToggle, onClearFilters }) => {
   return (
     <div className="bg-customBlue fixed left-0 top-0 w-64 h-full p-4 text-white max-xl:hidden">
-        <div className="mt-40 mb-4 ml-4 flex flex-col">
-          <h2 className="text-2xl mb-4">Filter</h2>
-          <label className="flex items-center mb-2">
-            <input type="checkbox" className="mr-2" />
-            Filter Option 1
-          </label>
-          <label className="flex items-center mb-2">
-            <input type="checkbox" className="mr-2" />
-            Filter Option 2
-          </label>
-          <label className="flex items-center mb-2">
-            <input type="checkbox" className="mr-2 acc" />
-            Filter Option 3
-          </label>
+      <div className="mt-28">
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-2xl font-semibold">Filter :</h2>
+          {selectedCategories.length > 0 && (
+            <button onClick={onClearFilters} className="text-sm bg-customRed text-white p-2 rounded">
+              Clear All
+            </button>
+          )}
         </div>
-        <div className="flex flex-col ml-4 ">
-          <h2 className="text-2xl mb-6">Sort</h2>
-          <label className="flex items-center mb-2">
-            <input type="radio" className="mr-2" />
-            Sort Option 1
-          </label>
-          <label className="flex items-center mb-2">
-            <input type="radio" className="mr-2" />
-            Sort Option 2
-          </label>
-          <label className="flex items-center mb-2">
-            <input type="radio" className="mr-2 acc" />
-            Sort Option 3
-          </label>
+
+        <div className="flex flex-col gap-4">
+          {categories.map((category) => (
+            <label key={category} className="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                checked={selectedCategories.includes(category)}
+                onChange={() => onCategoryToggle(category)}
+                className="h-5 w-5"
+              />
+              <span className="text-white">{category}</span>
+            </label>
+          ))}
         </div>
+      </div>
     </div>
   );
 };
