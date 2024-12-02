@@ -1,4 +1,4 @@
-import {useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import "./App.css";
 import ChecklistCard from "./components/ChecklistCard";
@@ -41,7 +41,6 @@ function App() {
 
   const filteredItems = useMemo(() => {
     return notes.filter((note) => {
-
       const matchesSearch = note.title.toLowerCase().includes(searchTerm.toLowerCase());
 
       const matchesCategories = selectedCategories.length === 0 || selectedCategories.every((category) => note.categories.includes(category));
@@ -77,7 +76,7 @@ function App() {
             ))}
           </div>
           <PopUp />
-          <Nav categories={allCategories} selectedCategories={selectedCategories} onCategoryToggle={toggleCategory} onClearFilters={clearFilters}/>
+          <Nav categories={allCategories} selectedCategories={selectedCategories} onCategoryToggle={toggleCategory} onClearFilters={clearFilters} />
         </div>
       </div>
     </PopupProvider>

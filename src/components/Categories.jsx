@@ -89,7 +89,7 @@ const Categories = ({
 };
 
 Categories.propTypes = {
-  categories: PropTypes.arrayOf(PropTypes.string).isRequired,
+  categories: PropTypes.array,
   editable: PropTypes.bool,
   onAddCategory: PropTypes.func,
   onRemoveCategory: PropTypes.func

@@ -1,13 +1,14 @@
 import { Filter, Plus, SortDesc, X } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
 const Nav = ({ categories, selectedCategories, onCategoryToggle, onClearFilters }) => {
   const [isFilterMenuOpen, setIsFilterMenuOpen] = useState(false);
   const [isSortMenuOpen, setIsSortMenuOpen] = useState(false);
 
   return (
-    <>
+    <div>
       <div className="fixed bottom-0 left-0 right-0 bg-customBlue border-t flex justify-between items-center px-12 py-3 xl:hidden z-50">
         <button
           onClick={() => {
@@ -60,9 +61,10 @@ const Nav = ({ categories, selectedCategories, onCategoryToggle, onClearFilters 
               </label>
             ))}
             {selectedCategories.length > 0 && (
-            <button onClick={onClearFilters} className="text-sm bg-customRed text-white p-2 rounded">
-              Clear All
-            </button>)}
+              <button onClick={onClearFilters} className="text-sm bg-customRed text-white p-2 rounded">
+                Clear All
+              </button>
+            )}
           </div>
         </div>
       )}
@@ -94,8 +96,15 @@ const Nav = ({ categories, selectedCategories, onCategoryToggle, onClearFilters 
           </button>
         </div>
       )}
-    </>
+    </div>
   );
+};
+
+Nav.propTypes = {
+  categories: PropTypes.array,
+  selectedCategories: PropTypes.array,
+  onCategoryToggle: PropTypes.func,
+  onClearFilters: PropTypes.func,
 };
 
 export default Nav;

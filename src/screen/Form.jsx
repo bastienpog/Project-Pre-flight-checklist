@@ -55,9 +55,6 @@ const Form = () => {
     });
   };
 
-  const handleSave = () => {
-
-  };
 
   return (
     <PopupProvider>
@@ -75,7 +72,7 @@ const Form = () => {
         </div>
         <TaskList editable={true} tasks={formData.tasks} onUpdateTask={handleUpdateTask} onRemoveTask={handleRemoveTask} onAddTask={handleAddTask} />
 
-        <BottomNav onSave={handleSave} form={true} />
+        <BottomNav editable={true} />
       </div>
     </PopupProvider>
   );

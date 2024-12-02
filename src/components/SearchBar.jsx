@@ -1,6 +1,7 @@
 import { Plus, Search } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
 const SearchBar = ({ onSearch }) => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -36,4 +37,7 @@ const SearchBar = ({ onSearch }) => {
   );
 };
 
+SearchBar.PropTypes = {
+  onSearch: PropTypes.array,
+}
 export default SearchBar;

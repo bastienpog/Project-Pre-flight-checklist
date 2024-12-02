@@ -1,8 +1,9 @@
 import { ArrowLeft, SquarePen, Trash2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import usePopup from "./PopUp/UsePopup";
+import PropTypes from "prop-types";
 
-const BottomNav = ({ onSave, form }) => {
+const BottomNav = ({editable}) => {
   const { openPopup } = usePopup();
 
   return (
@@ -14,7 +15,7 @@ const BottomNav = ({ onSave, form }) => {
         </button>
       </Link>
       <div className="flex gap-4">
-        {!form && (
+        {!editable && (
           <>
             <Link to={"/Form"}>
               <button className="text-yellow-500">
@@ -26,10 +27,10 @@ const BottomNav = ({ onSave, form }) => {
             </button>
           </>
         )}
-        {form && (
+        {editable && (
           <div>
             <Link to={"/"}>
-              <button onClick={onSave} className="bg-customBlue text-white px-8 py-2 rounded">
+              <button onClick={""} className="bg-customBlue text-white px-8 py-2 rounded">
                 Save
               </button>
             </Link>
@@ -39,5 +40,9 @@ const BottomNav = ({ onSave, form }) => {
     </div>
   );
 };
+
+BottomNav.PropTypes = {
+  editable: PropTypes.bool
+}
 
 export default BottomNav;

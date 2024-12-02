@@ -1,15 +1,6 @@
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
-const Info = ({ 
-  title, 
-  description, 
-  tasksDone, 
-  totalTasks, 
-  status, 
-  editable = false, 
-  onTitleChange, 
-  onDescriptionChange 
-}) => {
+const Info = ({ title, description, tasksDone, totalTasks, status, editable = false, onTitleChange, onDescriptionChange }) => {
   if (editable) {
     return (
       <div>
@@ -59,14 +50,14 @@ const Info = ({
 };
 
 Info.propTypes = {
-  title: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
+  title: PropTypes.string,
+  description: PropTypes.string,
   tasksDone: PropTypes.number,
   totalTasks: PropTypes.number,
   status: PropTypes.string,
   editable: PropTypes.bool,
   onTitleChange: PropTypes.func,
-  onDescriptionChange: PropTypes.func
+  onDescriptionChange: PropTypes.func,
 };
 
 export default Info;

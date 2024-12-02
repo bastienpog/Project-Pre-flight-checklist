@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 const Sidebar = ({ categories, selectedCategories, onCategoryToggle, onClearFilters }) => {
   return (
     <div className="bg-customBlue fixed left-0 top-0 w-64 h-full p-4 text-white max-xl:hidden">
@@ -29,4 +31,10 @@ const Sidebar = ({ categories, selectedCategories, onCategoryToggle, onClearFilt
   );
 };
 
+Sidebar.propTypes = {
+  categories: PropTypes.array,
+  selectedCategories: PropTypes.array,
+  onCategoryToggle: PropTypes.func,
+  onClearFilters: PropTypes.func,
+};
 export default Sidebar;
