@@ -2,10 +2,12 @@ import { useContext } from "react";
 import usePopup from "./UsePopup";
 import axios from "axios";
 import  PopupContext  from "./PopUpProvider";
+import { useNavigate } from "react-router-dom";
 
 const PopUp = () => {
   const { isOpen, closePopup, deleteId } = usePopup();
   const { fetchChecklists } = useContext(PopupContext);
+  const navigate = useNavigate();
 
   const handleDeleteRequest = async (deleteID) => {
     try {
@@ -18,6 +20,7 @@ const PopUp = () => {
     } catch (error) {
       console.error("Erreur :", error);
     }
+    navigate('/')
   };
 
   if (!isOpen) return null;

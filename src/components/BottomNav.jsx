@@ -22,18 +22,16 @@ const BottomNav = ({ editable, id, onSave}) => {
                 <SquarePen size={32} className="hover:text-customYellow mt-2" />
               </button>
             </Link>
-            <button onClick={openPopup} className="text-red-500">
+            <button onClick={() => openPopup(id)} className="text-red-500">
               <Trash2 size={32} className="hover:text-customRed" />
             </button>
           </>
         )}
         {editable && (
           <div>
-            {/* <Link to={"/"}> */}
               <button onClick={onSave} className="bg-customBlue text-white px-8 py-2 rounded">
                 Save
               </button>
-            {/* </Link> */}
           </div>
         )}
       </div>

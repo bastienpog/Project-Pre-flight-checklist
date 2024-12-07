@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import CreateChecklist from "../api/CreateChecklist";
 import GetChecklist from "../api/GetChecklist";
 import SaveChecklist from "../api/SaveChecklist";
 import BottomNav from "../components/BottomNav";
+import Categories from "../components/Categories";
 import Info from "../components/Info";
 import { PopupProvider } from "../components/PopUp/PopUpProvider";
 import TaskList from "../components/TaskList";
@@ -11,6 +12,7 @@ import TaskList from "../components/TaskList";
 const Form = () => {
   const [searchParams] = useSearchParams();
   const id = searchParams.get("id");
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     title: "",
@@ -19,14 +21,22 @@ const Form = () => {
     todo: [],
   });
 
-
-
   useEffect(() => {
     const fetchChecklist = async () => {
-        if (id) {
-          const checklist = await GetChecklist(id);
-          setFormData(checklist);
-        }
+      if (id) {
+        const checklist = await GetChecklist(id);
+
+        const description = checklist.description || "";
+        const categories = (description.match(/~~([^~]+)~~/g) || []).map((category) => category.replace(/~~/g, ""));
+
+        const cleanDescription = description.replace(/~~[^~]+~~/g, "").trim();
+
+        setFormData({
+          ...checklist,
+          description: cleanDescription,
+          categories,
+        });
+      }
     };
     fetchChecklist();
   }, [id]);
@@ -39,17 +49,17 @@ const Form = () => {
     setFormData((prev) => ({ ...prev, description: e.target.value }));
   };
 
-  const handleAddCategory = (category) => {
+  const handleAddCategory = (newCategory) => {
     setFormData((prev) => ({
       ...prev,
-      categories: [...prev.categories, category],
+      categories: [...(prev.categories || []), newCategory],
     }));
   };
 
-  const handleRemoveCategory = (index) => {
+  const handleRemoveCategory = (indexToRemove) => {
     setFormData((prev) => ({
       ...prev,
-      categories: prev.categories.filter((_, i) => i !== index),
+      categories: (prev.categories || []).filter((_, index) => index !== indexToRemove),
     }));
   };
 
@@ -79,8 +89,13 @@ const Form = () => {
     if (event) {
       event.preventDefault();
     }
+
+    const descriptionWithCategories =
+      (formData.description || "") + (formData.categories?.length > 0 ? formData.categories.map((cat) => `~~${cat}~~`).join("") : "");
+
     const payload = {
-      ...formData, // Use entire formData object
+      ...formData,
+      description: descriptionWithCategories,
       tasks: formData.todo || [],
     };
 
@@ -89,10 +104,8 @@ const Form = () => {
     } else {
       await CreateChecklist(payload);
     }
-
-    alert("Checklist saved successfully!");
+    navigate("/");
   };
-
 
   return (
     <PopupProvider>
@@ -105,21 +118,18 @@ const Form = () => {
             onTitleChange={handleTitleChange}
             onDescriptionChange={handleDescriptionChange}
           />
-          {/* 
-          <Categories 
-            editable={true} 
-            categories={formData.categories} 
-            onAddCategory={handleAddCategory} 
-            onRemoveCategory={handleRemoveCategory} 
-          /> */}
+
+          <Categories
+            categories={formData.categories || []}
+            editable={true}
+            onAddCategory={handleAddCategory}
+            onRemoveCategory={handleRemoveCategory}
+          />
         </div>
 
         <TaskList editable={true} tasks={formData.todo} onUpdateTask={handleUpdateTask} onRemoveTask={handleRemoveTask} onAddTask={handleAddTask} />
 
-        <BottomNav
-          editable={true}
-          onSave={handleSave} // Add this prop to BottomNav component
-        />
+        <BottomNav editable={true} onSave={handleSave} />
       </div>
     </PopupProvider>
   );
