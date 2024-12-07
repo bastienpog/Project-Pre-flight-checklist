@@ -77,23 +77,6 @@ const Nav = ({ categories, selectedCategories, onCategoryToggle, onClearFilters 
               <X size={24} />
             </button>
           </div>
-          <div className="overflow-y-auto flex-grow space-y-3">
-            <label className="flex items-center">
-              <input type="radio" name="sort" className="mr-2" />
-              Sort Option 1
-            </label>
-            <label className="flex items-center">
-              <input type="radio" name="sort" className="mr-2" />
-              Sort Option 2
-            </label>
-            <label className="flex items-center">
-              <input type="radio" name="sort" className="mr-2" />
-              Sort Option 3
-            </label>
-          </div>
-          <button className="w-full bg-white text-customBlue font-semibold py-2 rounded-lg mt-4" onClick={() => setIsSortMenuOpen(false)}>
-            Apply Sort
-          </button>
         </div>
       )}
     </div>

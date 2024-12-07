@@ -1,7 +1,7 @@
 import { Plus, Search } from "lucide-react";
+import PropTypes from "prop-types";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import PropTypes from "prop-types";
 
 const SearchBar = ({ onSearch }) => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -28,7 +28,7 @@ const SearchBar = ({ onSearch }) => {
         <Search className="absolute right-3 top-2.5 text-gray-400" size={20} />
       </div>
       <Link to={"/Form"}>
-        <button className="bg-customBlue flex flex-row py-2 px-6 mx-8 max-xl:hidden">
+        <button className="bg-customBlue flex flex-row py-2 px-6 mx-8 max-xl:hidden ">
           <Plus size={32} className="text-white" />
           <span className="ml-2 text-lg font-semibold text-white">NEW</span>
         </button>
@@ -37,7 +37,7 @@ const SearchBar = ({ onSearch }) => {
   );
 };
 
-SearchBar.PropTypes = {
-  onSearch: PropTypes.array,
-}
+SearchBar.propTypes = {
+  onSearch: PropTypes.func,
+};
 export default SearchBar;

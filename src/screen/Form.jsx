@@ -1,58 +1,96 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
+import CreateChecklist from "../api/CreateChecklist";
+import GetChecklist from "../api/GetChecklist";
+import SaveChecklist from "../api/SaveChecklist";
 import BottomNav from "../components/BottomNav";
-import Categories from "../components/Categories";
 import Info from "../components/Info";
-import TaskList from "../components/TaskList";
 import { PopupProvider } from "../components/PopUp/PopUpProvider";
+import TaskList from "../components/TaskList";
 
 const Form = () => {
+  const [searchParams] = useSearchParams();
+  const id = searchParams.get("id");
+
   const [formData, setFormData] = useState({
     title: "",
     description: "",
-    categories: ["category 1", "category 2"],
-    tasks: ["Conduct Comprehensive Keyword Research and Optimize On-Page Content", "Improve Website Load Speed by Optimizing Media and Code"],
+    categories: [],
+    todo: [],
   });
 
+
+
+  useEffect(() => {
+    const fetchChecklist = async () => {
+        if (id) {
+          const checklist = await GetChecklist(id);
+          setFormData(checklist);
+        }
+    };
+    fetchChecklist();
+  }, [id]);
+
   const handleTitleChange = (e) => {
-    setFormData({ ...formData, title: e.target.value });
+    setFormData((prev) => ({ ...prev, title: e.target.value }));
   };
 
   const handleDescriptionChange = (e) => {
-    setFormData({ ...formData, description: e.target.value });
+    setFormData((prev) => ({ ...prev, description: e.target.value }));
   };
 
   const handleAddCategory = (category) => {
-    setFormData({
-      ...formData,
-      categories: [...formData.categories, category],
-    });
+    setFormData((prev) => ({
+      ...prev,
+      categories: [...prev.categories, category],
+    }));
   };
 
   const handleRemoveCategory = (index) => {
-    setFormData({
-      ...formData,
-      categories: formData.categories.filter((_, i) => i !== index),
-    });
+    setFormData((prev) => ({
+      ...prev,
+      categories: prev.categories.filter((_, i) => i !== index),
+    }));
   };
 
   const handleUpdateTask = (index, newValue) => {
-    const newTasks = [...formData.tasks];
-    newTasks[index] = newValue;
-    setFormData({ ...formData, tasks: newTasks });
+    setFormData((prev) => {
+      const newTodo = [...prev.todo];
+      newTodo[index] = { ...newTodo[index], description: newValue };
+      return { ...prev, todo: newTodo };
+    });
   };
 
   const handleRemoveTask = (index) => {
-    setFormData({
-      ...formData,
-      tasks: formData.tasks.filter((_, i) => i !== index),
-    });
+    setFormData((prev) => ({
+      ...prev,
+      todo: prev.todo.filter((_, i) => i !== index),
+    }));
   };
 
   const handleAddTask = () => {
-    setFormData({
-      ...formData,
-      tasks: [...formData.tasks, ""],
-    });
+    setFormData((prev) => ({
+      ...prev,
+      todo: [...prev.todo, { description: "", status: false }],
+    }));
+  };
+
+  const handleSave = async (event) => {
+    if (event) {
+      event.preventDefault();
+    }
+    const payload = {
+      ...formData, // Use entire formData object
+      tasks: formData.todo || [],
+    };
+
+    if (id) {
+      await SaveChecklist(id, payload);
+    } else {
+      await CreateChecklist(payload);
+    }
+
+    alert("Checklist saved successfully!");
   };
 
 
@@ -67,12 +105,21 @@ const Form = () => {
             onTitleChange={handleTitleChange}
             onDescriptionChange={handleDescriptionChange}
           />
-
-          <Categories editable={true} categories={formData.categories} onAddCategory={handleAddCategory} onRemoveCategory={handleRemoveCategory} />
+          {/* 
+          <Categories 
+            editable={true} 
+            categories={formData.categories} 
+            onAddCategory={handleAddCategory} 
+            onRemoveCategory={handleRemoveCategory} 
+          /> */}
         </div>
-        <TaskList editable={true} tasks={formData.tasks} onUpdateTask={handleUpdateTask} onRemoveTask={handleRemoveTask} onAddTask={handleAddTask} />
 
-        <BottomNav editable={true} />
+        <TaskList editable={true} tasks={formData.todo} onUpdateTask={handleUpdateTask} onRemoveTask={handleRemoveTask} onAddTask={handleAddTask} />
+
+        <BottomNav
+          editable={true}
+          onSave={handleSave} // Add this prop to BottomNav component
+        />
       </div>
     </PopupProvider>
   );

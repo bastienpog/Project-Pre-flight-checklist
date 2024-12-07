@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-const Info = ({ title, description, tasksDone, totalTasks, status, editable = false, onTitleChange, onDescriptionChange }) => {
+const Info = ({ title, description, tasksDone, totalTasks, statut, editable = false, onTitleChange, onDescriptionChange }) => {
   if (editable) {
     return (
       <div>
@@ -31,11 +31,11 @@ const Info = ({ title, description, tasksDone, totalTasks, status, editable = fa
           <p>{description}</p>
         </div>
       </div>
-      <div className="bg-white p-4 border-b xl:bg-customBlue xl:p-2 xl:mb-4">
+      {/* <div className="bg-white p-4 border-b xl:bg-customBlue xl:p-2 xl:mb-4">
         <div className="mb-2 flex flex-row">
           <div className="xl:flex xl:flex-col">
-            <span className="font-semibold xl:mb-2">Status : </span>
-            {status}
+            <span className="font-semibold xl:mb-2">Statut : </span>
+            {statut}
           </div>
         </div>
         <div>
@@ -44,7 +44,7 @@ const Info = ({ title, description, tasksDone, totalTasks, status, editable = fa
             {tasksDone} task done / {totalTasks} task
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
@@ -54,7 +54,7 @@ Info.propTypes = {
   description: PropTypes.string,
   tasksDone: PropTypes.number,
   totalTasks: PropTypes.number,
-  status: PropTypes.string,
+  statut: PropTypes.string,
   editable: PropTypes.bool,
   onTitleChange: PropTypes.func,
   onDescriptionChange: PropTypes.func,

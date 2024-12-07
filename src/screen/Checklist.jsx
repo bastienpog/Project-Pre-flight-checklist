@@ -1,27 +1,52 @@
+import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
+import GetChecklist from "../api/GetChecklist";
 import BottomNav from "../components/BottomNav";
-import Categories from "../components/Categories";
 import Info from "../components/Info";
 import PopUp from "../components/PopUp/PopUp";
 import { PopupProvider } from "../components/PopUp/PopUpProvider";
 import TaskList from "../components/TaskList";
 
 const Checklist = () => {
-  const noteData = {
-    title: "Note 1",
-    description:
-      "This SEO checklist is a guide designed to help you optimize your website and improve its visibility. By following this step-by-step checklist, you can ensure that your site is fully optimized.",
-    status: "In progress",
-    tasksDone: 10,
-    totalTasks: 25,
-    categories: ["category 1", "category 2", "category 3"],
-    tasks: [
-      "Conduct Comprehensive Keyword Research and Optimize On-Page Content",
-      "Improve Website Load Speed by Optimizing Media and Code",
-      "Ensure Mobile Optimization with a Responsive, User-Friendly Design",
-      "Refine Internal Linking Strategy to Enhance Site Navigation and SEO Value",
-      "Develop a Strategy for Acquiring High-Quality Backlinks",
-    ],
-  };
+  const [searchParams] = useSearchParams();
+  const id = searchParams.get("id");
+  const [data, setData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchChecklists = async () => {
+      setIsLoading(true);
+      try {
+        if (id) {
+          const checklist = await GetChecklist(id);
+          setData(checklist);
+          setError(null);
+        }
+      } catch (error) {
+        console.error("Error fetching checklists:", error);
+        setError(error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchChecklists();
+  }, [id]);
+
+  // Render loading state
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  // Render error state
+  if (error) {
+    return <div>Error loading checklist: {error.message}</div>;
+  }
+
+  // Render only if data exists
+  if (!data) {
+    return <div>No checklist found</div>;
+  }
 
   return (
     <PopupProvider>
@@ -29,19 +54,16 @@ const Checklist = () => {
         <PopUp />
         <div className="xl:bg-customBlue xl:fixed xl:left-0 xl:top-0 xl:w-64 xl:h-full xl:text-white">
           <Info
-            title={noteData.title}
-            description={noteData.description}
-            status={noteData.status}
-            tasksDone={noteData.tasksDone}
-            totalTasks={noteData.totalTasks}
+            title={data.title}
+            description={data.description}
           />
-
-          <Categories categories={noteData.categories} />
         </div>
 
-        <TaskList tasks={noteData.tasks} />
+        <TaskList 
+          tasks={data.todo} 
+        />
 
-        <BottomNav/>
+        <BottomNav id={id}/>
       </div>
     </PopupProvider>
   );
